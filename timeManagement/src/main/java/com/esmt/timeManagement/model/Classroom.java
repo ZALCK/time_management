@@ -21,6 +21,8 @@ public class Classroom {
 	
 	@OneToMany(targetEntity=Student.class)
 	List<Student> students;
+	@OneToMany(targetEntity=Module.class)
+	List<Module> modules;
 
 	public long getId() {
 		return id;
@@ -43,9 +45,16 @@ public class Classroom {
 		this.students = students;
 	}
 
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
+	
 	@Override
 	public String toString() {
-		return "Classroom [id=" + id + ", name=" + name + ", students=" + students + "]";
+		return "Classroom [id=" + id + ", name=" + name + ", students=" + students + ", modules=" + modules + "]";
 	}
 
 }
