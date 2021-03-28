@@ -6,42 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esmt.timeManagement.model.Module;
+import com.esmt.timeManagement.repository.IModuleDAO;
 import com.esmt.timeManagement.service.interfaces.IModuleService;
 
 @Service
 public class ModuleServiceImpl implements IModuleService {
 
 	@Autowired
-	IModuleService ims;
+	IModuleDAO imd;
 	
 	@Override
 	public void create(Module module) {
 		// TODO Auto-generated method stub
-		ims.create(module);
+		imd.save(module);
 	}
 
 	@Override
 	public void update(Module module) {
 		// TODO Auto-generated method stub
-		ims.update(module);
+		imd.saveAndFlush(module);
 	}
 
 	@Override
 	public Module getModule(Long id) {
 		// TODO Auto-generated method stub
-		return ims.getModule(id);
+		return imd.getOne(id);
 	}
 
 	@Override
 	public void delete(Module module) {
 		// TODO Auto-generated method stub
-		ims.delete(module);
+		imd.delete(module);
 	}
 
 	@Override
 	public List<Module> getAll() {
 		// TODO Auto-generated method stub
-		return ims.getAll();
+		return imd.findAll();
 	}
 
 }

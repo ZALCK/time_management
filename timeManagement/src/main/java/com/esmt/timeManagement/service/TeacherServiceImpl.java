@@ -6,42 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esmt.timeManagement.model.Teacher;
+import com.esmt.timeManagement.repository.ITeacherDAO;
 import com.esmt.timeManagement.service.interfaces.ITeacherService;
 
 @Service
 public class TeacherServiceImpl implements ITeacherService {
 
 	@Autowired
-	ITeacherService its;
+	ITeacherDAO itd;
 	
 	@Override
 	public void create(Teacher teacher) {
 		// TODO Auto-generated method stub
-		its.create(teacher);
+		itd.save(teacher);
 	}
 
 	@Override
 	public void update(Teacher teacher) {
 		// TODO Auto-generated method stub
-		its.update(teacher);
+		itd.saveAndFlush(teacher);
 	}
 
 	@Override
 	public Teacher getTeacher(Long id) {
 		// TODO Auto-generated method stub
-		return its.getTeacher(id);
+		return itd.getOne(id);
 	}
 
 	@Override
 	public void delete(Teacher teacher) {
 		// TODO Auto-generated method stub
-		its.delete(teacher);
+		itd.delete(teacher);
 	}
 
 	@Override
 	public List<Teacher> getAll() {
 		// TODO Auto-generated method stub
-		return its.getAll();
+		return itd.findAll();
 	}
 
 }
