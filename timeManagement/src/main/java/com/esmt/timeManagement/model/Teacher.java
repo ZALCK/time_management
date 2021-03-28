@@ -14,8 +14,8 @@ public class Teacher extends Person {
 	
 	private long phone;
 	
-	@OneToMany(targetEntity = Classroom.class)
-	private List<Classroom> classrooms;
+	@OneToMany(targetEntity =  Module.class)
+	private List<Module> modules;
 
 	public long getPhone() {
 		return phone;
@@ -24,17 +24,18 @@ public class Teacher extends Person {
 		this.phone = phone;
 	}
 	
-	public List<Classroom> getClassrooms() {
-		return classrooms;
+	public List<Module> getModules() {
+		return modules;
 	}
-	public void setClassrooms(List<Classroom> classrooms) {
-		this.classrooms = classrooms;
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
 	}
 	
 	@Override
 	public String toString() {
 		return "Teacher [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", phone=" + phone + ", classrooms=" + classrooms + "]";
+				+ ", password=" + password + ", enabled=" + enabled + ", roles=" + roles + ", phone=" + phone
+				+ ", modules=" + modules + "]";
 	}
 
 }
