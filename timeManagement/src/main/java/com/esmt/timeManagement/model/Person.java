@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,10 +27,10 @@ public class Person {
 	protected String firstname, lastname, email, password;
 	protected boolean enabled;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "users_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
+			name = "persons_roles",
+			joinColumns = @JoinColumn(name = "person_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	Set<Role> roles = new HashSet<>();
 
