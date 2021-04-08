@@ -5,44 +5,44 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esmt.timeManagement.model.Student;
-import com.esmt.timeManagement.repository.IStudentDAO;
-import com.esmt.timeManagement.service.interfaces.IStudentService;
+import com.esmt.timeManagement.model.Classroom;
+import com.esmt.timeManagement.repository.IClassroomDAO;
+import com.esmt.timeManagement.service.interfaces.IClassroomService;
 
 @Service
-public class ClassroomServiceImpl implements IStudentService {
+public class ClassroomServiceImpl implements IClassroomService {
 
 	@Autowired
-	IStudentDAO isd;
+	IClassroomDAO icd;
 	
 	@Override
-	public void create(Student student) {
+	public void create(Classroom classroom) {
 		// TODO Auto-generated method stub
-		isd.save(student);
+		icd.save(classroom);
 	}
 
 	@Override
-	public void update(Student student) {
+	public void update(Classroom classroom) {
 		// TODO Auto-generated method stub
-		isd.saveAndFlush(student);
+		icd.saveAndFlush(classroom);
 	}
 
 	@Override
-	public Student getStudent(Long id) {
+	public Classroom getClassroom(Long id) {
 		// TODO Auto-generated method stub
-		return isd.getOne(id);
+		return icd.getOne(id);
 	}
 
 	@Override
-	public void delete(Student student) {
+	public void delete(Classroom classroom) {
 		// TODO Auto-generated method stub
-		isd.delete(student);
+		icd.delete(classroom);
 	}
 
 	@Override
-	public List<Student> getAll() {
+	public List<Classroom> getAll() {
 		// TODO Auto-generated method stub
-		return isd.findAll();
+		return icd.findAll();
 	}
 
 }

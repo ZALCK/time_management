@@ -18,6 +18,7 @@ public class Classroom {
 	private long id;
 	
 	private String name;
+	private int year;
 	
 	@OneToMany(targetEntity=Student.class)
 	List<Student> students;
@@ -37,6 +38,12 @@ public class Classroom {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
 
 	public List<Student> getStudents() {
 		return students;
@@ -54,7 +61,8 @@ public class Classroom {
 	
 	@Override
 	public String toString() {
-		return "Classroom [id=" + id + ", name=" + name + ", students=" + students + ", modules=" + modules + "]";
+		return "Classroom [id=" + id + ", name=" + name + ", year=" + year + ", students=" + students + ", modules="
+				+ modules + "]";
 	}
 
 }

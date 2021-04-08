@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List classroom</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${classrooms}">
+		<h2 th:case="null">Aucune classe trouvé!</h2>
+		<div th:case="*">
+			<h2>Classrooms</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Year</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="classroom : ${classrooms}">
+						<td th:text="${classroom.name}"></td>
+						<td th:text="${classroom.year}"></td>
+						<td><a th:href="@{/classroom/update/{id}(id=${classroom.id})}">Edit</a></td>
+						<td><a th:href="@{/classroom/delete/{id}(id=${classroom.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/classroom/add">Add a new classroom</a>
+		</p>
+	</div>
+</body>
+</html>
