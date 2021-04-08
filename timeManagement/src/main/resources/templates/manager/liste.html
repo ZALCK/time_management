@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List managers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${managers}">
+		<h2 th:case="null">Aucune manager trouvé!</h2>
+		<div th:case="*">
+			<h2>Managers</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Edit</th>
+						<th>Reset</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="manager : ${managers}">
+						<td th:text="${manager.firstname}"></td>
+						<td th:text="${manager.lastname}"></td>
+						<td th:text="${manager.email}"></td>
+						<td th:text="${manager.phone}"></td>
+						<td><a th:href="@{/manager/update/{id}(id=${manager.id})}">Edit</a></td>
+						<td><a th:href="@{/manager/reset/{id}(id=${manager.id})}">Reset</a></td>
+						<td><a th:href="@{/manager/status/{id}(id=${manager.id})}"
+								th:utext="${manager.enabled} ? 'Disable' : 'Enable'">Enabled</a></td>
+						<td><a th:href="@{/manager/delete/{id}(id=${manager.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/manager/add">Add a new manager</a>
+		</p>
+	</div>
+</body>
+</html>

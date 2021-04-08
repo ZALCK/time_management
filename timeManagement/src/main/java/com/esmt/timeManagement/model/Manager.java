@@ -34,7 +34,8 @@ public class Manager extends Person {
 	@Override
 	public String toString() {
 		return "Manager [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", password=" + password + ", phone=" + phone + ", classrooms=" + classrooms + "]";
+				+ ", password=" + password + ", enabled=" + enabled + ", roles=" + roles + ", phone=" + phone
+				+ ", classrooms=" + classrooms + "]";
 	}
 	
 }

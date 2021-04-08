@@ -24,7 +24,6 @@ public class ClassroomController {
 	public String toAddClassroom(Model model) {
 		Classroom classroom = new Classroom();
 		model.addAttribute("classroom", classroom);
-		//ics.enregistrer(client);
 		return "/classroom/ajout";
 	}
 	
@@ -52,14 +51,11 @@ public class ClassroomController {
 	public String suppression(@PathVariable("id") long id, Model model){
 		Classroom classroom = ics.getClassroom(id);
 		ics.delete(classroom);
-		List<Classroom> liste;
-		liste = ics.getAll();
-		model.addAttribute("classrooms", liste);
 		return "redirect:/classroom/list";
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listeClassrooms(Model model) {
+	public String listClassrooms(Model model) {
 		List<Classroom> liste;
 		liste = ics.getAll();
 		model.addAttribute("classrooms", liste);
