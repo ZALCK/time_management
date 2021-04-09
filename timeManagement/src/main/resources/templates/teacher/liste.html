@@ -3,13 +3,13 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>List managers</title>
+<title>List teachers</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-	<div th:switch="${teachers}">
-		<h2 th:case="null">No teachers found!</h2>
+	<div th:switch="${teachers.isEmpty()}">
+		<h2 th:case="true">No teachers found!</h2>
 		<div th:case="*">
 			<h2>Teachers</h2>
 			<table>

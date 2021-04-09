@@ -1,11 +1,17 @@
 package com.esmt.timeManagement.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.esmt.timeManagement.model.Role;
+import com.esmt.timeManagement.model.RoleList;
 import com.esmt.timeManagement.model.Student;
+import com.esmt.timeManagement.repository.IRoleDAO;
 import com.esmt.timeManagement.repository.IStudentDAO;
 import com.esmt.timeManagement.service.interfaces.IStudentService;
 
@@ -14,10 +20,22 @@ public class StudentServiceImpl implements IStudentService {
 
 	@Autowired
 	IStudentDAO isd;
+	@Autowired
+	IRoleDAO ird;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@Override
 	public void create(Student student) {
 		// TODO Auto-generated method stub
+		student.setEnabled(false);
+		student.setPassword(passwordEncoder.encode(student.getEmail()));
+		// Get Manager Role
+		Role roleStudent = ird.findByName(RoleList.STUDENT.toString());
+		Set<Role> setA = new HashSet<>();
+        setA.add(roleStudent);
+        
+		student.setRoles(setA);
 		isd.save(student);
 	}
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List students</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${students.isEmpty()}">
+		<h2 th:case="true">No students found!</h2>
+		<div th:case="*">
+			<h2>Students</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Matricule</th>
+						<th>Edit</th>
+						<th>Reset</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="student : ${students}">
+						<td th:text="${student.firstname}"></td>
+						<td th:text="${student.lastname}"></td>
+						<td th:text="${student.email}"></td>
+						<td th:text="${student.matricule}"></td>
+						<td><a th:href="@{/student/update/{id}(id=${student.id})}">Edit</a></td>
+						<td><a th:href="@{/student/reset/{id}(id=${student.id})}">Reset</a></td>
+						<td><a th:href="@{/student/status/{id}(id=${student.id})}"
+								th:utext="${student.enabled} ? 'Disable' : 'Enable'">Enabled</a></td>
+						<td><a th:href="@{/student/delete/{id}(id=${student.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/student/add">Add a new student</a>
+		</p>
+	</div>
+</body>
+</html>

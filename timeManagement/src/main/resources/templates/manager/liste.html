@@ -8,8 +8,8 @@
 </head>
 
 <body>
-	<div th:switch="${managers}">
-		<h2 th:case="null">No managers found!</h2>
+	<div th:switch="${managers.isEmpty()}">
+		<h2 th:case="true">No managers found!</h2>
 		<div th:case="*">
 			<h2>Managers</h2>
 			<table>

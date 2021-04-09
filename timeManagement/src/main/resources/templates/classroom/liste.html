@@ -8,8 +8,8 @@
 </head>
 
 <body>
-	<div th:switch="${classrooms}">
-		<h2 th:case="null">No classroom found!</h2>
+	<div th:switch="${classrooms.isEmpty()}">
+		<h2 th:case="true">No classroom found!</h2>
 		<div th:case="*">
 			<h2>Classrooms</h2>
 			<table>

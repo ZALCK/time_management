@@ -15,7 +15,7 @@ import com.esmt.timeManagement.service.interfaces.ITeacherService;
 
 @Controller
 @RequestMapping(value = "/teacher")
-public class TeacherManagerController {
+public class TeacherController {
 
 	@Autowired
 	private ITeacherService its;

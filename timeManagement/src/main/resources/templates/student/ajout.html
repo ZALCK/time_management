@@ -3,15 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Update a student</title>
+<title>Add a Student</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
 
-	<form action="#" th:action="@{/student/update}" th:object="${student}"
+	<form action="#" th:action="@{/student/add}" th:object="${student}"
 		method="post">
-		<input type="hidden" th:field="*{id}">
 		
 		<label for="firstname">Firstname</label>
 		<input type="text" th:field="*{firstname}" placeholder="Firstname" required="required">
@@ -22,10 +21,10 @@
 		<label for="email">Email</label>
 		<input type="email" th:field="*{email}" placeholder="Email" required="required">
 		
-		<label for="matricule">Matricule</label>
-		<input type="text" th:field="*{matricule}" placeholder="Matricule" required="required">
+		<label for="phone">Matricule</label>
+		<input type="text" th:field="*{matricule}" placeholder="Student matricule" required="required">
 		
-		<input type="submit" value="Update Student">
+		<input type="submit" value="Add Student">
 	</form>
 
 </body>
