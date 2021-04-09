@@ -24,6 +24,12 @@
 		<label for="phone">Matricule</label>
 		<input type="text" th:field="*{matricule}" placeholder="Student matricule" required="required">
 		
+		<label for="classroom">Classroom</label>
+		<select th:field="*{classroom.id}" id="classroom">
+ 			 <option th:each="elementClassroom : ${classrooms}" 
+          		th:value="${elementClassroom.id}" 
+          		th:text="${elementClassroom.name}">Classroom name</option>
+		</select>
 		<input type="submit" value="Add Student">
 	</form>
 

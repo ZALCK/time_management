@@ -3,24 +3,20 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Update a student</title>
+<title>Add a Module</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
 
-	<form action="#" th:action="@{/student/update}" th:object="${student}"
+	<form action="#" th:action="@{/module/add}" th:object="${module}"
 		method="post">
-		<input type="hidden" th:field="*{id}">
 		
-		<label for="firstname">Firstname</label>
-		<input type="text" th:field="*{firstname}" placeholder="Firstname" required="required">
+		<label for="name">Name</label>
+		<input type="text" th:field="*{name}" placeholder="Classroom name" required="required">
 		
-		<label for="lastname">Lastname</label>
-		<input type="text" th:field="*{lastname}" placeholder="Lastname" required="required">
-		
-		<label for="email">Email</label>
-		<input type="email" th:field="*{email}" placeholder="Email" required="required">
+		<label for="hours">Hours</label>
+		<input type="text" th:field="*{hours}" placeholder="Hourly weight" required="required">
 		
 		<label for="classroom">Classroom</label>
 		<select th:field="*{classroom.id}" id="classroom">
@@ -28,8 +24,7 @@
           		th:value="${elementClassroom.id}" 
           		th:text="${elementClassroom.name}">Classroom name</option>
 		</select>
-		
-		<input type="submit" value="Update Student">
+		<input type="submit" value="Add Module">
 	</form>
 
 </body>

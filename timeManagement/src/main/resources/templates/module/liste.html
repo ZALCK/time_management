@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List modules</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${modules.isEmpty()}">
+		<h2 th:case="true">No modules found!</h2>
+		<div th:case="*">
+			<h2>Modules</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Hours</th>
+						<th>Classroom</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="module : ${modules}">
+						<td th:text="${module.name}"></td>
+						<td th:text="${module.hours}"></td>
+						<td th:text="${module.classroom.name}"></td>
+						<td><a th:href="@{/module/update/{id}(id=${module.id})}">Edit</a></td>
+						<td><a th:href="@{/module/delete/{id}(id=${module.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/module/add">Add a new module</a>
+		</p>
+	</div>
+</body>
+</html>
