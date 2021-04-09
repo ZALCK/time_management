@@ -9,7 +9,7 @@
 
 <body>
 	<div th:switch="${managers}">
-		<h2 th:case="null">Aucune manager trouvé!</h2>
+		<h2 th:case="null">No managers found!</h2>
 		<div th:case="*">
 			<h2>Managers</h2>
 			<table>

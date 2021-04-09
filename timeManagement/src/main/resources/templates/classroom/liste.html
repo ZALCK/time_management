@@ -9,7 +9,7 @@
 
 <body>
 	<div th:switch="${classrooms}">
-		<h2 th:case="null">Aucune classe trouvé!</h2>
+		<h2 th:case="null">No classroom found!</h2>
 		<div th:case="*">
 			<h2>Classrooms</h2>
 			<table>
