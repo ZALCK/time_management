@@ -9,30 +9,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "sessions")
 public class Session {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date startAt;
-	private Date endAt;
-	private int duration;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private Date endAt;
+	private String details;
+
 	@OneToOne(targetEntity = Module.class)
 	private Module module;
 	
 	public Session() {
 		super();
-	}
-	public Session(Date startAt, Date endAt, int duration, Module module) {
-		super();
-		this.startAt = startAt;
-		this.endAt = endAt;
-		this.duration = duration;
-		this.module = module;
 	}
 
 	public long getId() {
@@ -56,13 +54,14 @@ public class Session {
 		this.endAt = endAt;
 	}
 
-	public int getDuration() {
-		return duration;
+	public String getDetails() {
+		return details;
 	}
-	public void setDuration(int duration) {
-		this.duration = duration;
+
+	public void setDetails(String details) {
+		this.details = details;
 	}
-	
+
 	public Module getModule() {
 		return module;
 	}
@@ -72,9 +71,8 @@ public class Session {
 
 	@Override
 	public String toString() {
-		return "Session [id=" + id + ", startAt=" + startAt + ", endAt=" + endAt + ", duration=" + duration
-				+ ", module=" + module + "]";
+		return "Session [id=" + id + ", startAt=" + startAt + ", endAt=" + endAt + ", details=" + details + ", module="
+				+ module + "]";
 	}
-	
 
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>List modules</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div th:switch="${meetings.isEmpty()}">
+		<h2 th:case="true">No sessions found!</h2>
+		<div th:case="*">
+			<h2>Sessions</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Start at</th>
+						<th>End at</th>
+						<th>Module</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="meeting : ${meetings}">
+						<td th:text="${meeting.details}"></td>
+						<td th:text="${meeting.startAt}"></td>
+						<td th:text="${meeting.endAt}"></td>
+						<td th:text="${meeting.module.name}"></td>
+						<td><a th:href="@{/session/update/{id}(id=${meeting.id})}">Edit</a></td>
+						<td><a th:href="@{/session/delete/{id}(id=${meeting.id})}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p>
+			<a href="/session/add">Add a new session</a>
+		</p>
+	</div>
+</body>
+</html>

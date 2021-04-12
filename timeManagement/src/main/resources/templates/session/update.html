@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Update a session</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+	<form action="#" th:action="@{/session/update}" th:object="${meeting}"
+		method="post">
+		<input type="hidden" th:field="*{id}">
+		
+		<label for="name">Details</label>
+		<input type="text" th:field="*{details}" placeholder="Details" required="required">
+		
+		<label for="startAt">Start at</label>
+		<input type="datetime-local" th:field="*{startAt}" placeholder="Starting datetime" required="required">
+		
+		<label for="startAt">End at</label>
+		<input type="datetime-local" th:field="*{endAt}" placeholder="Ending datetime" required="required">
+		
+		<label for="module">Module</label>
+		<select th:field="*{module.id}" id="modue">
+ 			 <option th:each="elementModule : ${modules}" 
+          		th:value="${elementModule.id}" 
+          		th:text="${elementModule.name +' '+ elementModule.classroom.name}">Module name</option>
+		</select>
+		
+		<input type="submit" value="Update Session">
+	</form>
+
+</body>
+
+</html>

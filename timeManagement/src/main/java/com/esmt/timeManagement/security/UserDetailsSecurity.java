@@ -70,4 +70,9 @@ public class UserDetailsSecurity implements UserDetails {
 		return person.isEnabled();
 	}
 
+	@Override
+	public String toString() {
+		return "UserDetailsSecurity [person=" + person + "]";
+	}
+
 }
