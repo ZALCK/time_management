@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.esmt.timeManagement.annotations.Exclude;
+
 @Entity
 @Table(name = "sessions")
 public class Session {
@@ -24,9 +26,11 @@ public class Session {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date endAt;
+	
 	private String details;
-
+	
 	@OneToOne(targetEntity = Module.class)
+	@Exclude
 	private Module module;
 	
 	public Session() {

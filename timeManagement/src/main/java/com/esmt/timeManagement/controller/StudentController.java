@@ -89,8 +89,11 @@ public class StudentController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listStudents(Model model) {
 		List<Student> liste = iss.getAll();
+		Student student = new Student();
+		model.addAttribute("classrooms", ics.getAll());
+		model.addAttribute("student", student);
 		model.addAttribute("students", liste);
-		return "/student/liste";
+		return "/student/dashboard";
 	}
 
 }

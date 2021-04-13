@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/w3.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>My menus</title>
+</head>
+
+<body class="w3-theme-l5">
+	<!-- Panel with table title and errors span as content -->
+	<div th:fragment="my-panel" class="w3-container w3-padding w3-theme-d2 w3-margin w3-round-large w3-card-4">
+		<h2 th:utext="${tabletitle}">List</h2>
+		<p>Select a row on table to display content, click on edit or delete buttons to edit or delete the element on a row</p>
+	</div>
+</body>
+</html>

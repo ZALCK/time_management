@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/w3.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+<title>My menus</title>
+</head>
+
+<body class="w3-theme-l5">
+<!-- Sidebar/menu -->
+<nav th:fragment="my-sidebar" class="w3-sidebar w3-theme-d2 w3-collapse w3-top w3-large w3-padding w3-margin w3-round-large w3-bar-block w3-card-4" style="z-index:3;width:19%;font-weight:bold;" id="mySidebar"><br>
+	<a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+	<div class="w3-container">
+		<h3 class="w3-padding-64"><b>Company<br>Name</b></h3>
+	</div>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/manager/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Managers</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/teacher/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Teachers</a>
+	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER','TEACHER')" href="/classroom/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Classrooms</a>
+	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="/module/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Modules</a>
+	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="/student/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Students</a>
+	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER','TEACHER')" href="/session/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sessions</a>	
+</nav>
+
+<!-- Side menu on small screens -->
+<header th:fragment="my-sidebar-mobile" class="w3-container w3-top w3-hide-large w3-theme-l1 w3-xlarge w3-padding">
+	<a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+	<span>Company Name</span>
+</header>
+
+<!-- Top menu on large screens -->
+<div th:fragment="my-topbar" class="w3-margin">
+	<nav class="w3-bar w3-theme w3-collapse w3-large w3-padding w3-round-large w3-card-4" style="font-weight:bold;" id="myTopbar">
+		<a href="#Deconnexion" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white w3-right">Deconnexion</a>
+		<a href="#" class="w3-bar-item w3-button w3-right"><i class="fa fa-envelope"></i></a>
+		<div class="w3-dropdown-hover w3-right w3-bar-block">
+			<div class="w3-bar-item w3-button">Profile <i class="fa fa-caret-down"></i>
+			</div>
+			<div id="demoDrop" class="w3-dropdown-content w3-white w3-card-4">
+				<a href="#pass" class="w3-bar-item w3-button">Change password</a>
+				<a href="#log" class="w3-bar-item w3-button">Logout</a>
+			</div>
+		</div>
+	</nav>
+</div>
+
+</body>
+</html>

@@ -81,8 +81,10 @@ public class TeacherController {
 	public String listTeachers(Model model) {
 		List<Teacher> liste;
 		liste = its.getAll();
+		Teacher teacher = new Teacher();
+		model.addAttribute("teacher", teacher);
 		model.addAttribute("teachers", liste);
-		return "/teacher/liste";
+		return "/teacher/dashboard";
 	}
 	
 }

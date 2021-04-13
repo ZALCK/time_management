@@ -58,8 +58,10 @@ public class ClassroomController {
 	public String listClassrooms(Model model) {
 		List<Classroom> liste;
 		liste = ics.getAll();
+		Classroom classroom = new Classroom();
+		model.addAttribute("classroom", classroom);
 		model.addAttribute("classrooms", liste);
-		return "/classroom/liste";
+		return "/classroom/dashboard";
 	}
 	
 }

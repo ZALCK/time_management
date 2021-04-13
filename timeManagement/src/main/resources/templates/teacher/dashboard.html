@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/w3.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+<title>Dashboard - Teachers</title>
+</head>
+
+<body class="w3-theme-l5">
+
+<th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
+
+<th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
+
+<div style="margin-left:20%;width:80%;">
+	<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
+	<th:block th:insert="~{fragments/panel::my-panel(tabletitle='Teachers list')}"></th:block>
+	
+	<div th:switch="${teachers.isEmpty()}" class="w3-container w3-theme w3-margin w3-padding-16 w3-round-large w3-card-4">
+		<h2 th:case="true" class="w3-large w3-padding-48">No teacher found!</h2>
+		<div th:case="*" class="w3-responsive">
+			<div class="w3-row w3-margin-bottom">
+	  			<div class="w3-half">
+	  				<input id="searchField" type="text" placeholder="Search for firstname" class="w3-center w3-theme-l3 w3-border-0 w3-round w3-padding" style="width:100%" onkeyup="mySearchFunction()">
+	  			</div>
+    			<a href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('id01').style.display='block'">Add</a>
+  			</div>
+			<table id="myTable" class="w3-table-all w3-light-grey w3-hoverable">
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th style="width:20%;">Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="teacher : ${teachers}" class="w3-hover-black" th:classappend="${teacher.enabled} ? w3-theme-l4 : w3-sand">
+						<td th:text="${teacher.firstname}"></td>
+						<td th:text="${teacher.lastname}"></td>
+						<td th:text="${teacher.email}"></td>
+						<td th:text="${teacher.phone}"></td>
+						<td>
+							<a th:href="@{/teacher/update/{id}(id=${teacher.id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
+							<a th:href="@{/teacher/reset/{id}(id=${teacher.id})}" class="w3-button w3-theme-d5" title="Reset"><i class="fa fa-undo w3-large"></i></a>
+							<a th:href="@{/teacher/delete/{id}(id=${teacher.id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>
+							<a th:href="@{/teacher/status/{id}(id=${teacher.id})}" 
+								class="w3-button" th:classappend="${teacher.enabled} ? w3-green : w3-orange" title="Enable/Disable">
+								<i class="fa fa-thumbs-o-up w3-large" th:if="${teacher.enabled}"></i>
+								<i class="fa fa-thumbs-o-down w3-large" th:if="${!teacher.enabled}"></i>
+							</a>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</div>
+
+		<div class="w3-container">
+			<div id="id01" class="w3-modal">
+				<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+					<header class="w3-container w3-green">
+						<span
+							onclick="document.getElementById('id01').style.display='none'"
+							class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+							title="Close Modal">&times;</span>
+						<h2>New manager</h2>
+					</header>
+
+					<form class="w3-container" th:action="@{/teacher/add}" th:object="${teacher}" method="post">
+						<div class="w3-section">
+							<label for="firstname"><b>Firstname</b></label>
+							<input th:field="*{firstname}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter firstname" required>
+							
+							<label for="lastname"><b>Lastname</b></label>
+							<input th:field="*{lastname}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter lastname" required>
+							
+							<label for="email"><b>Email</b></label>
+							<input th:field="*{email}" class="w3-input w3-border w3-margin-bottom" type="email" placeholder="Enter email" required>
+							
+							<label for="phone"><b>Phone</b></label>
+							<input th:field="*{phone}" class="w3-input w3-border w3-margin-bottom" type="tel" placeholder="776410023" pattern="[0-9]{9}" required>
+							
+							<button class="w3-button w3-block w3-green w3-section w3-padding"
+								type="submit">Add Teacher</button>
+						</div>
+					</form>
+
+					<footer
+						class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+						<button
+							onclick="document.getElementById('id01').style.display='none'"
+							type="button" class="w3-button w3-red">Cancel</button>
+					</footer>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

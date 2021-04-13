@@ -1,5 +1,6 @@
 package com.esmt.timeManagement.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.esmt.timeManagement.model.Session;
+import com.esmt.timeManagement.repository.SessionDAOImpl;
+import com.esmt.timeManagement.annotations.AnnotationExclusionStrategy;
 import com.esmt.timeManagement.model.Module;
 import com.esmt.timeManagement.service.interfaces.ISessionService;
+import com.google.gson.*;
 import com.esmt.timeManagement.service.interfaces.IModuleService;
 
 @Controller
 @RequestMapping(value = "/session")
 public class SessionController {
 
+	@Autowired
+	private SessionDAOImpl sdi;
 	@Autowired
 	private ISessionService iss;
 	@Autowired
@@ -27,6 +35,7 @@ public class SessionController {
 	@RequestMapping(value = "/add", method =RequestMethod.GET)
 	public String toAddSession(Model model) {
 		Session meeting = new Session();
+		meeting.setStartAt(Calendar.getInstance().getTime());
 		model.addAttribute("modules", ims.getAll());
 		model.addAttribute("meeting", meeting);
 		return "/session/ajout";
@@ -61,7 +70,14 @@ public class SessionController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String suppression(@PathVariable("id") long id, Model model){
+	public String suppressionWithGET(@PathVariable("id") long id, Model model){
+		Session meeting = iss.getSession(id);
+		iss.delete(meeting);
+		return "redirect:/session/list";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String suppressionWithPOST(@RequestParam("id") long id, Model model){
 		Session meeting = iss.getSession(id);
 		iss.delete(meeting);
 		return "redirect:/session/list";
@@ -70,8 +86,20 @@ public class SessionController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listSession(Model model) {
 		List<Session> liste = iss.getAll();
+		Session meeting = new Session();
+		meeting.setStartAt(Calendar.getInstance().getTime());
+		model.addAttribute("modules", ims.getAll());
+		model.addAttribute("meeting", meeting);
 		model.addAttribute("meetings", liste);
-		return "/session/liste";
+		return "/session/dashboard";
+	}
+
+	@RequestMapping(value = "/rawlist", method = RequestMethod.GET)
+	@ResponseBody
+	public String rawlistSession(Model model) {
+		Gson gson = new GsonBuilder().setExclusionStrategies(new AnnotationExclusionStrategy()).create();
+		//return gson.toJson(iss.getAll());
+		return gson.toJson(sdi.getAllSession());
 	}
 	
 }

@@ -70,8 +70,11 @@ public class ModuleController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listModule(Model model) {
 		List<Module> liste = ims.getAll();
+		Module module = new Module();
+		model.addAttribute("classrooms", ics.getAll());
+		model.addAttribute("module", module);
 		model.addAttribute("modules", liste);
-		return "/module/liste";
+		return "/module/dashboard";
 	}
 	
 }

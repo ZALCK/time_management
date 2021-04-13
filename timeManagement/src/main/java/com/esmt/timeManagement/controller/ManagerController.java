@@ -81,8 +81,10 @@ public class ManagerController {
 	public String listManagers(Model model) {
 		List<Manager> liste;
 		liste = ims.getAll();
+		Manager manager = new Manager();
+		model.addAttribute("manager", manager);
 		model.addAttribute("managers", liste);
-		return "/manager/liste";
+		return "/manager/dashboard";
 	}
 	
 }
