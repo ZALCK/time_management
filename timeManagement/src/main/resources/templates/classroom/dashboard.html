@@ -4,9 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/w3.css}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<th:block th:insert="~{fragments/dependencies::minimum}"></th:block>
 <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 <title>Dashboard - Classrooms</title>
 </head>
@@ -22,15 +20,19 @@
 	<th:block th:insert="~{fragments/panel::my-panel(tabletitle='Classrooms list')}"></th:block>
 	
 	<div th:switch="${classrooms.isEmpty()}" class="w3-container w3-theme w3-margin w3-padding-16 w3-round-large w3-card-4">
-		<h2 th:case="true" class="w3-large w3-padding-48">No classrooms found!</h2>
+		<div th:case="true">
+			<h2 class="w3-padding-24">No classrooms found!</h2>
+			<a href="#Add" class="w3-button w3-theme-d5 w3-left" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add a new classroom</a>	
+		</div>
 		<div th:case="*" class="w3-responsive">
 			<div class="w3-row w3-margin-bottom">
 	  			<div class="w3-half">
-	  				<input id="searchField" type="text" placeholder="Search for name" class="w3-center w3-theme-l3 w3-border-0 w3-round w3-padding" style="width:100%" onkeyup="mySearchFunction()">
+	  				<input id="classroomSearchField" type="text" placeholder="Search for name" class="w3-center w3-theme-l3 w3-border-0 w3-round w3-padding" style="width:100%" onkeyup="mySearchFunction('classroomSearchField','myClassroomsTable')">
 	  			</div>
-    			<a href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('id01').style.display='block'">Add</a>
+    			<a href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add</a>
   			</div>
-			<table id="myTable" class="w3-table-all w3-light-grey w3-hoverable">
+  			
+			<table id="myClassroomsTable" class="w3-table-all w3-light-grey w3-hoverable">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -43,6 +45,7 @@
 						<td th:text="${classroom.name}"></td>
 						<td th:text="${classroom.year}"></td>
 						<td>
+							<a th:href="@{/classroom/list/{id}(id=${classroom.id})}" class="w3-button w3-green" title="Details"><i class="fa fa-info w3-large"></i></a>
 							<a th:href="@{/classroom/update/{id}(id=${classroom.id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
 							<a th:href="@{/classroom/delete/{id}(id=${classroom.id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>
 						</td>
@@ -50,44 +53,53 @@
 				</tbody>
 			</table>
 		</div>
-		</div>
+	</div>
+</div>
 
-		<div class="w3-container">
-			<div id="id01" class="w3-modal">
-				<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
-					<header class="w3-container w3-green">
-						<span
-							onclick="document.getElementById('id01').style.display='none'"
-							class="w3-button w3-xlarge w3-hover-red w3-display-topright"
-							title="Close Modal">&times;</span>
-						<h2>New classroom</h2>
-					</header>
 
-					<form class="w3-container" th:action="@{/classroom/add}" th:object="${classroom}" method="post">
-						<div class="w3-section">
-							<label for="name"><b>Name</b></label>
-							<input th:field="*{name}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter classroom name"  required>
-							
-							<label for="year"><b>Year</b></label>
-							<input th:field="*{year}" class="w3-input w3-border w3-margin-bottom" type="number" placeholder="Enter year"  required>
-							
-							<button class="w3-button w3-block w3-green w3-section w3-padding"
-								type="submit">Add Classroom</button>
-						</div>
-					</form>
+<div id="classroomCreationForm" class="w3-modal">
+	<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+		<header class="w3-container w3-green">
+			<span
+				onclick="document.getElementById('classroomCreationForm').style.display='none'"
+				class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+				title="Close Modal">&times;</span>
+			<h2>New classroom</h2>
+		</header>
 
-					<footer
-						class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-						<button
-							onclick="document.getElementById('id01').style.display='none'"
-							type="button" class="w3-button w3-red">Cancel</button>
-					</footer>
-
-				</div>
+		<form class="w3-container" th:action="@{/classroom/add}" th:object="${classroom}" method="post">
+			<div class="w3-section">
+				<label for="name"><b>Name</b></label>
+				<input th:field="*{name}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter classroom name"  required>
+				
+				<label for="year"><b>Year</b></label>
+				<input th:field="*{year}" class="w3-input w3-border w3-margin-bottom" type="number" placeholder="Enter year"  required>
+				
+				<th:block sec:authorize="hasAuthority('ADMIN')">
+					<label for="manager">Manager</label>
+					<select th:field="*{manager}" id="manager" class="w3-select">
+			 			 <option th:each="elementManager : ${managers}" 
+			          		th:value="${elementManager.id}" 
+			          		th:text="${elementManager.lastname+' '+elementManager.firstname}">Manager name</option>
+					</select>
+				</th:block>
+				
+				<button class="w3-button w3-block w3-green w3-section w3-padding"
+					type="submit">Add Classroom</button>
 			</div>
-		</div>
+		</form>
+
+		<footer
+			class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+			<button
+				onclick="document.getElementById('classroomCreationForm').style.display='none'"
+				type="button" class="w3-button w3-red">Cancel</button>
+		</footer>
 
 	</div>
+</div>
 
+
+<th:block th:insert="~{fragments/forms::passwordForm}"></th:block>
 </body>
 </html>

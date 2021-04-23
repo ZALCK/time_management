@@ -4,10 +4,6 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/w3.css}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 <title>My menus</title>
 </head>
 
@@ -41,8 +37,8 @@
 			<div class="w3-bar-item w3-button">Profile <i class="fa fa-caret-down"></i>
 			</div>
 			<div id="demoDrop" class="w3-dropdown-content w3-white w3-card-4">
-				<a href="#pass" class="w3-bar-item w3-button">Change password</a>
-				<a href="#log" class="w3-bar-item w3-button">Logout</a>
+				<a href="#" onclick="document.getElementById('id02').style.display='block'" class="w3-bar-item w3-button">Change password</a>
+				<a th:href="@{/logout}" class="w3-bar-item w3-button">Logout</a>
 			</div>
 		</div>
 	</nav>

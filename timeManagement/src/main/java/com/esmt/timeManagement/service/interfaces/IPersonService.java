@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.esmt.timeManagement.exception.UserAlreadyExistException;
 import com.esmt.timeManagement.model.Person;
+import com.esmt.timeManagement.model.Role;
 
 public interface IPersonService {
 	public void create (Person person);
@@ -12,5 +13,7 @@ public interface IPersonService {
 	public void delete (Person person);
 	public List<Person> getAll();
 	
-	 Person registerNewUserAccount(Person person) throws UserAlreadyExistException;
+	public Person registerNewUserAccount(Person person) throws UserAlreadyExistException;
+	public Person findByEmail(String email);
+	public Role getRoleByName(String name);
 }

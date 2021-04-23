@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<th:block th:insert="~{fragments/dependencies::minimum}"></th:block>
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+<th:block th:insert="~{fragments/dependencies::calendar}"></th:block>
+<title>Dashboard - Classrooms</title>
+</head>
+
+<body class="w3-theme-l5">
+
+<th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
+
+<th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
+
+<div style="margin-left:20%;width:80%;">
+	<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
+	<th:block th:insert="~{fragments/panel::my-panel(tabletitle=${classroom.name} + ' Details', displayTabs='true')}"></th:block>
+	
+	<div id="tableSessions" class="detailsClassroom" th:insert="~{session/dashboard::tableSessions}"></div>
+	
+	<div id="tableStudents" class="detailsClassroom" style="display:none" th:insert="~{student/dashboard::tableStudents}"></div>
+
+	<div id="tableModules" class="detailsClassroom" style="display:none" th:insert="~{module/dashboard::tableModules}"></div>
+	
+</div>
+
+<th:block th:insert="~{session/dashboard::sessionCreationForm}"></th:block>
+<th:block th:insert="~{student/dashboard::studentCreationForm}"></th:block>
+<th:block th:insert="~{module/dashboard::moduleCreationForm}"></th:block>
+<th:block th:insert="~{fragments/forms::passwordForm}"></th:block>
+
+<script>
+function openClassDetails(evt, detailsName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("detailsClassroom");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+  document.getElementById(detailsName).style.display = "block";
+  evt.currentTarget.className += " w3-red";
+}
+</script>
+</body>
+</html>

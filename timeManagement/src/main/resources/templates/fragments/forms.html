@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<th:block th:fragment="passwordForm">
+<div class="w3-container">
+	<div id="id02" class="w3-modal">
+		<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+			<header class="w3-container w3-green">
+				<span
+					onclick="document.getElementById('id02').style.display='none'"
+					class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+					title="Close Modal">&times;</span>
+				<h2>Change Password</h2>
+			</header>
+
+			<form class="w3-container" th:action="@{/changePassword}" method="post">
+				<div class="w3-section">
+					<label for="oldPass"><b>Old password</b></label>
+					<input name="oldPass" class="w3-input w3-border w3-margin-bottom" type="password" placeholder="Enter old password"  required>
+					
+					<label for="name"><b>New password</b></label>
+					<input name="newPass" class="w3-input w3-border w3-margin-bottom" type="password" placeholder="Enter new password"  required>
+					
+					<label for="repeatPass"><b>Repeat password</b></label>
+					<input name="repeatPass" class="w3-input w3-border w3-margin-bottom" type="password" placeholder="Repeat new password"  required>
+					
+					<button class="w3-button w3-block w3-green w3-section w3-padding"
+						type="submit">Change password</button>
+				</div>
+			</form>
+
+			<footer
+				class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+				<button
+					onclick="document.getElementById('id01').style.display='none'"
+					type="button" class="w3-button w3-red">Cancel</button>
+			</footer>
+
+		</div>
+	</div>
+</div>
+</th:block>
+
+</body>
+</html>

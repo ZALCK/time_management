@@ -22,7 +22,7 @@ $(document).ready(function() {
 	}
 	
 
-     document.getElementById('id01').style.display='block';
+     document.getElementById('sessionCreationForm').style.display='block';
      if(title)
      {
       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");

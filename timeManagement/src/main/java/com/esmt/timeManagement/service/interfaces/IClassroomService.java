@@ -10,4 +10,6 @@ public interface IClassroomService {
 	public Classroom getClassroom (Long id);
 	public void delete (Classroom classroom);
 	public List<Classroom> getAll();
+	public List<Classroom> getClassroomsByManager(Long id);
+	public List<Classroom> getClassroomsByTeacher(Long id);
 }

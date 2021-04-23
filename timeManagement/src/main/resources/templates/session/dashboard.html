@@ -4,71 +4,64 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/w3.css}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-<script th:src="@{/js/custom-calendar.js}"></script>
+<th:block th:insert="~{fragments/dependencies::minimum}"></th:block>
+<th:block th:insert="~{fragments/dependencies::calendar}"></th:block>
+
 <title>Dashboard - Schedule</title>
 </head>
 
 <body class="w3-theme-l5">
 
-	<th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
+<th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
 
-	<th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
+<th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
 
-	<div style="margin-left: 20%; width: 80%;">
-		<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
-		
-		<th:block th:insert="~{fragments/panel::my-panel(tabletitle='Schedule')}"></th:block>
-		
-		<div class="w3-container w3-margin w3-padding-16 w3-round-large w3-card-4">
-			<div id='calendar'></div>
-		</div>
-		
-		<div class="w3-container">
-			<div id="id01" class="w3-modal">
-				<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
-					<header class="w3-container w3-padding w3-green">
-						<span
-							onclick="document.getElementById('id01').style.display='none'"
-							class="w3-button w3-xlarge w3-hover-red w3-display-topright"
-							title="Close Modal">&times;</span>
-						<h2>New session</h2>
-					</header>
-
-					<form class="w3-container" th:action="@{/session/add}" th:object="${meeting}" method="post">
-						<div class="w3-section">
-							<label for="details"><b>Details</b></label>
-							<input id="detailsField" th:field="*{details}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter details"  required>
-							
-							<label for="startAt"><b>Starts at</b></label>
-							<input id="startAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
-							
-							<label for="startAt"><b>Ends at</b></label>
-							<input id="endAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
-							
-							<button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Create Session</button>
-						</div>
-					</form>
-
-					<footer
-						class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-						<button
-							onclick="document.getElementById('id01').style.display='none'"
-							type="button" class="w3-button w3-red">Cancel</button>
-					</footer>
-
-				</div>
-			</div>
-		</div>
-		
+<div style="margin-left: 20%; width: 80%;">
+	
+	<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
+	
+	<th:block th:insert="~{fragments/panel::my-panel(tabletitle='Schedule')}"></th:block>
+	
+	<div th:fragment="tableSessions" class="w3-container w3-margin w3-padding-16 w3-round-large w3-card-4">
+		<div id='calendar'></div>
 	</div>
+</div>
 
+<div th:fragment="sessionCreationForm" id="sessionCreationForm" class="w3-modal">
+	<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+		<header class="w3-container w3-padding w3-green">
+			<span
+				onclick="document.getElementById('sessionCreationForm').style.display='none'"
+				class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+				title="Close Modal">&times;</span>
+			<h2>New session</h2>
+		</header>
+
+		<form class="w3-container" th:action="@{/session/add}" th:object="${meeting}" method="post">
+			<div class="w3-section">
+				<label for="details"><b>Details</b></label>
+				<input id="detailsField" th:field="*{details}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter details"  required>
+				
+				<label for="startAt"><b>Starts at</b></label>
+				<input id="startAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
+				
+				<label for="startAt"><b>Ends at</b></label>
+				<input id="endAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
+				
+				<button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Create Session</button>
+			</div>
+		</form>
+
+		<footer
+			class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+			<button
+				onclick="document.getElementById('sessionCreationForm').style.display='none'"
+				type="button" class="w3-button w3-red">Cancel</button>
+		</footer>
+
+	</div>
+</div>
+
+<th:block th:insert="~{fragments/forms::passwordForm}"></th:block>
 </body>
 </html>

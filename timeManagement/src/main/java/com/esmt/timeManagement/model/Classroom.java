@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,10 +21,12 @@ public class Classroom {
 	private String name;
 	private int year;
 	
-	@OneToMany(targetEntity=Student.class)
-	List<Student> students;
-	@OneToMany(targetEntity=Module.class)
-	List<Module> modules;
+	@OneToOne
+	private Manager manager;
+	@OneToMany(targetEntity=Student.class, mappedBy = "classroom")
+	private List<Student> students;
+	@OneToMany(targetEntity=Module.class, mappedBy = "classroom")
+	private List<Module> modules;
 
 	public long getId() {
 		return id;
@@ -45,6 +48,13 @@ public class Classroom {
 		this.year = year;
 	}
 
+	public Manager getManager() {
+		return manager;
+	}
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+	
 	public List<Student> getStudents() {
 		return students;
 	}
@@ -61,8 +71,8 @@ public class Classroom {
 	
 	@Override
 	public String toString() {
-		return "Classroom [id=" + id + ", name=" + name + ", year=" + year + ", students=" + students + ", modules="
-				+ modules + "]";
+		return "Classroom [id=" + id + ", name=" + name + ", year=" + year + ", manager=" + manager + ", students="
+				+ students + ", modules=" + modules + "]";
 	}
 
 }

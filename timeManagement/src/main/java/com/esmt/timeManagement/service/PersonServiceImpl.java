@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.esmt.timeManagement.exception.UserAlreadyExistException;
 import com.esmt.timeManagement.model.Person;
+import com.esmt.timeManagement.model.Role;
 import com.esmt.timeManagement.repository.IPersonDAO;
+import com.esmt.timeManagement.repository.IRoleDAO;
 import com.esmt.timeManagement.service.interfaces.IPersonService;
 
 @Service
@@ -16,6 +18,8 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Autowired
 	IPersonDAO ipd;
+	@Autowired
+	IRoleDAO ird;
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -56,18 +60,26 @@ public class PersonServiceImpl implements IPersonService {
 		if (emailExists(person.getEmail())) {
             throw new UserAlreadyExistException("There is an account with that email address: " + person.getEmail());
         }
-
-//        user.setFirstName(person.getFirstName());
-//        user.setLastName(person.getLastName());
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-//        user.setEmail(person.getEmail());
-//        user.setUsing2FA(person.isUsing2FA());
-//        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return ipd.save(person);
+	}
+	
+	@Override
+	public Person findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return ipd.findByEmail(email);
 	}
 	
 	private boolean emailExists(final String email) {
         return ipd.findByEmail(email) != null;
     }
+
+	@Override
+	public Role getRoleByName(String name) {
+		// TODO Auto-generated method stub
+		return ird.findByName(name);
+	}
+
+	
 
 }

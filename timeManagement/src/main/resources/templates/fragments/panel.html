@@ -4,9 +4,6 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/w3.css}" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>My menus</title>
 </head>
 
@@ -15,6 +12,22 @@
 	<div th:fragment="my-panel" class="w3-container w3-padding w3-theme-d2 w3-margin w3-round-large w3-card-4">
 		<h2 th:utext="${tabletitle}">List</h2>
 		<p>Select a row on table to display content, click on edit or delete buttons to edit or delete the element on a row</p>
+		
+		<!-- Tabs for classroom -->
+		<th:block th:if="${displayTabs}">
+			<div class="w3-bar w3-theme-l2 w3-round-large">
+			    <button class="w3-bar-item w3-button tablink w3-red" onclick="openClassDetails(event,'tableSessions')">Sessions</button>
+			    <button class="w3-bar-item w3-button tablink" onclick="openClassDetails(event,'tableModules')">Modules</button>
+			    <button class="w3-bar-item w3-button tablink" onclick="openClassDetails(event,'tableStudents')">Students</button>
+			</div>
+		</th:block>
+		
 	</div>
+	
+	<div th:fragment="classroom-div" class="w3-panel w3-orange w3-round-large w3-left w3-margin w3-center" style="width:300px;height:150px">
+   		<p class="w3-large w3-white w3-round-large w3-padding" style="height:70px;"><b th:utext="${classroomtitle}"></b></p>
+   		<a th:href="@{/classroom/update/{id}(id=${id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
+		<a th:href="@{/classroom/delete/{id}(id=${id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>
+  	</div>
 </body>
 </html>

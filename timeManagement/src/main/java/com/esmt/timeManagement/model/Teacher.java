@@ -14,7 +14,7 @@ public class Teacher extends Person {
 	
 	private long phone;
 	
-	@OneToMany(targetEntity =  Module.class)
+	@OneToMany(targetEntity =  Module.class, mappedBy = "teacher")
 	private List<Module> modules;
 
 	public long getPhone() {
