@@ -1,5 +1,7 @@
 package com.esmt.timeManagement.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +19,12 @@ import com.esmt.timeManagement.model.Person;
 import com.esmt.timeManagement.model.RoleList;
 import com.esmt.timeManagement.model.Session;
 import com.esmt.timeManagement.model.Student;
+import com.esmt.timeManagement.model.Teacher;
 import com.esmt.timeManagement.service.interfaces.IClassroomService;
 import com.esmt.timeManagement.service.interfaces.IManagerService;
+import com.esmt.timeManagement.service.interfaces.IModuleService;
 import com.esmt.timeManagement.service.interfaces.IPersonService;
+import com.esmt.timeManagement.service.interfaces.ITeacherService;
 
 @Controller
 @RequestMapping(value = "/classroom")
@@ -28,9 +33,13 @@ public class ClassroomController {
 	@Autowired
 	private IClassroomService ics;
 	@Autowired
+	private IModuleService imoduleservice;
+	@Autowired
 	private IPersonService ips;
 	@Autowired
 	private IManagerService ims;
+	@Autowired
+	private ITeacherService its;
 
 	@RequestMapping(value = "/add", method =RequestMethod.GET)
 	public String toAddClassroom(Model model) {
@@ -52,6 +61,7 @@ public class ClassroomController {
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String toUpdate(@PathVariable("id") Long id, Model model) {
 		Classroom classroom = ics.getClassroom(id);
+		model.addAttribute("managers", ims.getAll());
 		model.addAttribute("classroom", classroom);
 		return "/classroom/update";
 	}
@@ -75,16 +85,9 @@ public class ClassroomController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listClassrooms(Model model) {
-		//Create list classrooms based on user connected roles
-		Person personConnected = getCurrentPersonConnected();
-		if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.ADMIN.toString()))) {
-			model.addAttribute("managers", ims.getAll());
-			model.addAttribute("classrooms", ics.getAll());
-		} else if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.MANAGER.toString()))) {
-			model.addAttribute("classrooms", ics.getClassroomsByManager(personConnected.getId()));
-		} else if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.TEACHER.toString()))) {
-			model.addAttribute("classrooms", ics.getClassroomsByTeacher(personConnected.getId()));
-		}
+		// Adding classrooms list based on user connected roles
+		model.addAttribute("classrooms", getClassroomList());
+
 		Classroom classroom = new Classroom();
 		model.addAttribute("classroom", classroom);
 		return "/classroom/dashboard";
@@ -95,7 +98,13 @@ public class ClassroomController {
 		//Create list classrooms based on user connected roles
 		Classroom classroom = ics.getClassroom(id);
 		model.addAttribute("students", classroom.getStudents());
-		model.addAttribute("modules", classroom.getModules());
+		if (getCurrentPersonConnected().getRoles().contains(ips.getRoleByName(RoleList.TEACHER.toString()))) {
+			Teacher teacher = its.getTeacher(getCurrentPersonConnected().getId());
+			model.addAttribute("modules", imoduleservice.getModulesByTeacherAndClassroom(classroom, teacher));
+		} else {
+			model.addAttribute("modules", classroom.getModules());
+		}
+		
 		model.addAttribute("classroom", classroom);
 		
 		// Define the value of the class attribute for the "student" and "module" objects of the forms
@@ -107,7 +116,11 @@ public class ClassroomController {
 		model.addAttribute("student", student);
 		model.addAttribute("module", module);
 		model.addAttribute("meeting", meeting);
-		model.addAttribute("classrooms", ics.getAll());
+		model.addAttribute("teachers", its.getAll());
+		model.addAttribute("studentRole", ips.getRoleByName(RoleList.LEADER.toString()));
+
+		// Adding classroom list by user connected
+		model.addAttribute("classrooms", getClassroomList());
 		return "/classroom/classroom-dashboard";
 	}
 
@@ -118,6 +131,18 @@ public class ClassroomController {
 			UserDetails userDetails = (UserDetails) principal;
 			personConnected= ips.findByEmail(userDetails.getUsername());
 			return personConnected;
+		}
+		return null;
+	}
+	
+	private List<Classroom> getClassroomList() {
+		Person personConnected = getCurrentPersonConnected();
+		if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.ADMIN.toString()))) {
+			return ics.getAll();
+		} else if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.MANAGER.toString()))) {
+			return ics.getClassroomsByManager(personConnected.getId());
+		} else if (personConnected.getRoles().contains(ips.getRoleByName(RoleList.TEACHER.toString()))) {
+			return ics.getClassroomsByTeacher(personConnected.getId());
 		}
 		return null;
 	}

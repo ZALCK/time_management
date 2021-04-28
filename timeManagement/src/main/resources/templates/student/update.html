@@ -22,6 +22,9 @@
 		<label for="email">Email</label>
 		<input type="email" th:field="*{email}" placeholder="Email" required="required">
 		
+		<label for="matricule">Matricule</label>
+		<input type="text" th:field="*{matricule}" placeholder="Matricule" required="required">
+		
 		<label for="classroom">Classroom</label>
 		<select th:field="*{classroom.id}" id="classroom">
  			 <option th:each="elementClassroom : ${classrooms}" 

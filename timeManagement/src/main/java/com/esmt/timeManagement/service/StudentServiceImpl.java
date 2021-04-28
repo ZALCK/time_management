@@ -56,11 +56,26 @@ public class StudentServiceImpl implements IStudentService {
 		// TODO Auto-generated method stub
 		isd.delete(student);
 	}
-
+	
+	@Override
+	public void graduate(Long id) {
+		// TODO Auto-generated method stub
+		Student student = getStudent(id);
+		Role leaderRole = ird.findByName(RoleList.LEADER.toString());
+		if (student.getRoles().contains(leaderRole)) {
+			student.getRoles().remove(leaderRole);
+		} else {
+			student.getRoles().add(leaderRole);
+		}
+		update(student);
+	}
+	
 	@Override
 	public List<Student> getAll() {
 		// TODO Auto-generated method stub
 		return isd.findAll();
 	}
+
+	
 
 }

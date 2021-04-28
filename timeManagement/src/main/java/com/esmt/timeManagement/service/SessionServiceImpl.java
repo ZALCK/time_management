@@ -45,4 +45,16 @@ public class SessionServiceImpl implements ISessionService {
 		return isd.findAll();
 	}
 
+	@Override
+	public List<Session> getSessionsToApproveByTeacher(long id) {
+		// TODO Auto-generated method stub
+		return isd.getSessionsToApproveByTeacher(id);
+	}
+
+	@Override
+	public List<Session> getSessionsToApproveByClassroom(long id) {
+		// TODO Auto-generated method stub
+		return isd.getSessionsToApproveByClassroom(id);
+	}
+
 }

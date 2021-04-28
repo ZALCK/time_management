@@ -1,9 +1,13 @@
 package com.esmt.timeManagement.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,6 +27,9 @@ public class Module {
 	
 	@OneToOne(targetEntity = Teacher.class)
 	private Teacher teacher;
+	
+	@OneToMany(targetEntity = Session.class, mappedBy = "module", fetch = FetchType.LAZY)
+	private List<Session> sessions;
 	
 	public Module() {
 		super();
@@ -68,6 +75,13 @@ public class Module {
 	}
 	public void setHours(int hours) {
 		this.hours = hours;
+	}
+	
+	public List<Session> getSessions() {
+		return sessions;
+	}
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
 	}
 	
 	@Override

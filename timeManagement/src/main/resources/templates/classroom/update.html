@@ -1,6 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <title>Update a classroom</title>
@@ -18,6 +19,14 @@
 		<label for="year">Year</label>
 		<input type="number" th:field="*{year}" id="year" placeholder="Year">
 		
+		<th:block sec:authorize="hasAuthority('ADMIN')">
+			<label for="manager">Manager</label>
+			<select th:field="*{manager}" id="manager" class="w3-select">
+	 			 <option th:each="elementManager : ${managers}" 
+	          		th:value="${elementManager.id}" 
+	          		th:text="${elementManager.lastname+' '+elementManager.firstname}">Manager name</option>
+			</select>
+		</th:block>
 		<input type="submit" value="Update Classroom">
 	</form>
 

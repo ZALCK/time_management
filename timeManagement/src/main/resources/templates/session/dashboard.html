@@ -11,7 +11,7 @@
 </head>
 
 <body class="w3-theme-l5">
-
+<input id="classroomID" type="hidden" th:value="${idClassroomStudent}">
 <th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
 
 <th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
@@ -27,7 +27,7 @@
 	</div>
 </div>
 
-<div th:fragment="sessionCreationForm" id="sessionCreationForm" class="w3-modal">
+<div sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" th:fragment="sessionCreationForm" id="sessionCreationForm" class="w3-modal">
 	<div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
 		<header class="w3-container w3-padding w3-green">
 			<span
@@ -39,14 +39,18 @@
 
 		<form class="w3-container" th:action="@{/session/add}" th:object="${meeting}" method="post">
 			<div class="w3-section">
-				<label for="details"><b>Details</b></label>
-				<input id="detailsField" th:field="*{details}" class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter details"  required>
+				<label for="module">Module</label>
+				<select th:field="*{module.id}" id="module" class="w3-select">
+		 			 <option th:each="elementModule : ${modules}" 
+		          		th:value="${elementModule.id}" 
+		          		th:text="${elementModule.name}">Module name</option>
+				</select>
 				
 				<label for="startAt"><b>Starts at</b></label>
 				<input id="startAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
 				
 				<label for="startAt"><b>Ends at</b></label>
-				<input id="endAtField" th:field="*{startAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
+				<input id="endAtField" th:field="*{endAt}" class="w3-input w3-border w3-margin-bottom" type="datetime-local" placeholder="Enter starting date"  required>
 				
 				<button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Create Session</button>
 			</div>

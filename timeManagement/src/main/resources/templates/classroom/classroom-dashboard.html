@@ -11,7 +11,7 @@
 </head>
 
 <body class="w3-theme-l5">
-
+<input id="classroomID" type="hidden" th:field="${classroom.id}">
 <th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
 
 <th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
@@ -19,9 +19,9 @@
 <div style="margin-left:20%;width:80%;">
 	<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
 	<th:block th:insert="~{fragments/panel::my-panel(tabletitle=${classroom.name} + ' Details', displayTabs='true')}"></th:block>
-	
+
 	<div id="tableSessions" class="detailsClassroom" th:insert="~{session/dashboard::tableSessions}"></div>
-	
+
 	<div id="tableStudents" class="detailsClassroom" style="display:none" th:insert="~{student/dashboard::tableStudents}"></div>
 
 	<div id="tableModules" class="detailsClassroom" style="display:none" th:insert="~{module/dashboard::tableModules}"></div>

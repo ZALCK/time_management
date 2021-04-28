@@ -4,5 +4,6 @@ public enum RoleList {
 	ADMIN,
 	MANAGER,
 	TEACHER,
-	STUDENT
+	STUDENT,
+	LEADER
 }

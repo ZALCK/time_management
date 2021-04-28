@@ -22,14 +22,14 @@
 	<div th:switch="${classrooms.isEmpty()}" class="w3-container w3-theme w3-margin w3-padding-16 w3-round-large w3-card-4">
 		<div th:case="true">
 			<h2 class="w3-padding-24">No classrooms found!</h2>
-			<a href="#Add" class="w3-button w3-theme-d5 w3-left" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add a new classroom</a>	
+			<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="#Add" class="w3-button w3-theme-d5 w3-left" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add a new classroom</a>	
 		</div>
 		<div th:case="*" class="w3-responsive">
 			<div class="w3-row w3-margin-bottom">
 	  			<div class="w3-half">
 	  				<input id="classroomSearchField" type="text" placeholder="Search for name" class="w3-center w3-theme-l3 w3-border-0 w3-round w3-padding" style="width:100%" onkeyup="mySearchFunction('classroomSearchField','myClassroomsTable')">
 	  			</div>
-    			<a href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add</a>
+    			<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('classroomCreationForm').style.display='block'">Add</a>
   			</div>
   			
 			<table id="myClassroomsTable" class="w3-table-all w3-light-grey w3-hoverable">
@@ -45,9 +45,9 @@
 						<td th:text="${classroom.name}"></td>
 						<td th:text="${classroom.year}"></td>
 						<td>
-							<a th:href="@{/classroom/list/{id}(id=${classroom.id})}" class="w3-button w3-green" title="Details"><i class="fa fa-info w3-large"></i></a>
-							<a th:href="@{/classroom/update/{id}(id=${classroom.id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
-							<a th:href="@{/classroom/delete/{id}(id=${classroom.id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>
+							<a th:href="@{/classroom/list/{id}(id=${classroom.id})}" class="w3-button w3-green" title="Details"><i class="fa fa-info w3-large"></i><b sec:authorize="hasAuthority('TEACHER')">  Details</b></a>
+							<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" th:href="@{/classroom/update/{id}(id=${classroom.id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
+							<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" th:href="@{/classroom/delete/{id}(id=${classroom.id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>
 						</td>
 					</tr>
 				</tbody>

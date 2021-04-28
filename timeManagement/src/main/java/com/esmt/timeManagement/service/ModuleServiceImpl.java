@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esmt.timeManagement.model.Classroom;
 import com.esmt.timeManagement.model.Module;
+import com.esmt.timeManagement.model.Teacher;
 import com.esmt.timeManagement.repository.IModuleDAO;
 import com.esmt.timeManagement.service.interfaces.IModuleService;
 
@@ -43,6 +45,12 @@ public class ModuleServiceImpl implements IModuleService {
 	public List<Module> getAll() {
 		// TODO Auto-generated method stub
 		return imd.findAll();
+	}
+
+	@Override
+	public List<Module> getModulesByTeacherAndClassroom(Classroom classroom, Teacher teacher) {
+		// TODO Auto-generated method stub
+		return imd.findByClassroomAndTeacher(classroom, teacher);
 	}
 
 }

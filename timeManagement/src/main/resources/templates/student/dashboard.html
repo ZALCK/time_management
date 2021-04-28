@@ -22,7 +22,7 @@
 	<div th:fragment="tableStudents" th:switch="${students.isEmpty()}" class="w3-container w3-theme w3-margin w3-padding-16 w3-round-large w3-card-4">
 		<div th:case="true">
 			<h2 class="w3-large w3-padding-24">No students found!</h2>
-			<a href="#Add" class="w3-button w3-theme-d5 w3-left" onclick="document.getElementById('studentCreationForm').style.display='block'">Add a new student</a>
+			<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="#Add" class="w3-button w3-theme-d5 w3-left" onclick="document.getElementById('studentCreationForm').style.display='block'">Add a new student</a>
 		</div>
 		
 		<div th:case="*" class="w3-responsive">
@@ -30,7 +30,7 @@
 	  			<div class="w3-half">
 	  				<input id="studentSearchField" type="text" placeholder="Search for firstname" class="w3-center w3-theme-l3 w3-border-0 w3-round w3-padding" style="width:100%" onkeyup="mySearchFunction('studentSearchField','myStudentsTable')">
 	  			</div>
-	   			<a href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('studentCreationForm').style.display='block'">Add</a>
+	   			<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="#Add" class="w3-button w3-theme-d5 w3-right" onclick="document.getElementById('studentCreationForm').style.display='block'">Add</a>
 	 			</div>
 			<table id="myStudentsTable" class="w3-table-all w3-light-grey w3-hoverable">
 				<thead>
@@ -39,16 +39,17 @@
 						<th>Lastname</th>
 						<th>Email</th>
 						<th>Matricule</th>
-						<th style="width:20%;">Options</th>
+						<th sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" style="width:25%;">Options</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="student : ${students}" class="w3-hover-black" th:classappend="${student.enabled} ? w3-theme-l4 : w3-sand">
+					<tr th:each="student : ${students}" class="w3-hover-black" th:classappend="${#arrays.contains(student.roles, studentRole)} ? w3-sand : w3-theme-l4">
 						<td th:text="${student.firstname}"></td>
 						<td th:text="${student.lastname}"></td>
 						<td th:text="${student.email}"></td>
 						<td th:text="${student.matricule}"></td>
-						<td>
+						<td sec:authorize="hasAnyAuthority('ADMIN','MANAGER')">
+							<a th:href="@{/student/graduate/{id}(id=${student.id})}" class="w3-button w3-lime" title="Graduate"><i th:classappend="${#arrays.contains(student.roles, studentRole)} ? fa-level-up : fa-level-down" class="fa fa-level-up w3-large"></i></a>
 							<a th:href="@{/student/update/{id}(id=${student.id})}" class="w3-button w3-theme-d5" title="Edit"><i class="fa fa-pencil w3-large"></i></a>
 							<a th:href="@{/student/reset/{id}(id=${student.id})}" class="w3-button w3-theme-d5" title="Reset"><i class="fa fa-undo w3-large"></i></a>
 							<a th:href="@{/student/delete/{id}(id=${student.id})}" class="w3-button w3-red" title="Delete"><i class="fa fa-trash-o w3-large"></i></a>

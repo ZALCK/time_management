@@ -9,5 +9,6 @@ public interface IStudentService {
 	public void update (Student student);
 	public Student getStudent (Long id);
 	public void delete (Student student);
+	public void graduate (Long id);
 	public List<Student> getAll();
 }

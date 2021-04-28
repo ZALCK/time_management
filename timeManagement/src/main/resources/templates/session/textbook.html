@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<th:block th:insert="~{fragments/dependencies::minimum}"></th:block>
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+<title>Dashboard - Textbook</title>
+</head>
+
+<body class="w3-theme-l5">
+
+<th:block th:insert="~{fragments/menus::my-sidebar}"></th:block>
+
+<th:block th:insert="~{fragments/menus::my-sidebar-mobile}"></th:block>
+
+<div style="margin-left:20%;width:80%;">
+	<th:block th:insert="~{fragments/menus::my-topbar}"></th:block>
+	<th:block th:insert="~{fragments/panel::my-panel(tabletitle='Textbook')}"></th:block>
+
+	<div th:fragment="tableTextbook" th:switch="${meetings.isEmpty()}" class="w3-container w3-theme w3-margin w3-padding-16 w3-round-large w3-card-4">
+		<div th:case="true">
+			<h2 class="w3-large w3-padding-24">No meetings to approve!</h2>
+		</div>
+		
+		<div th:case="*" class="w3-responsive">
+			<table id="myTextbookTable" class="w3-table-all w3-light-grey w3-hoverable">
+				<thead>
+					<tr>
+						<th>Details</th>
+						<th>Start at</th>
+						<th>End at</th>
+						<th sec:authorize="hasAnyAuthority('TEACHER','LEADER')" style="width:10%;">Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="meeting : ${meetings}" class="w3-hover-black">
+						<td th:text="${meeting.details}"></td>
+						<td th:text="${meeting.startAt}"></td>
+						<td th:text="${meeting.endAt}"></td>
+						<td sec:authorize="hasAnyAuthority('TEACHER','LEADER')">
+							<a th:href="@{/session/status/{id}(id=${meeting.id})}"
+								class="w3-button" th:classappend="w3-light-gray" title="Status">
+								<th:block sec:authorize="hasAuthority('TEACHER')">
+									<i class="fa fa-thumbs-o-down w3-large" th:if="${meeting.status == 'IN_PROGRESS'}"></i>
+									<i class="fa fa-thumbs-o-up w3-large" th:if="${meeting.status == 'COMPLETED'}"></i>
+									<i class="fa fa-check w3-large" th:if="${meeting.status == 'APPROVED'}"></i>
+								</th:block>
+								<th:block sec:authorize="hasAuthority('LEADER')">
+									<i class="fa fa-clock-o w3-large" th:if="${meeting.status == 'IN_PROGRESS'}"></i>
+									<i class="fa fa-thumbs-o-down w3-large" th:if="${meeting.status == 'COMPLETED'}"></i>
+									<i class="fa fa-thumbs-o-up w3-large" th:if="${meeting.status == 'APPROVED'}"></i>
+								</th:block>
+								
+							</a>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<th:block th:insert="~{fragments/forms::passwordForm}"></th:block>
+
+</body>
+</html>

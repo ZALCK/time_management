@@ -17,9 +17,10 @@
 	<a sec:authorize="hasAuthority('ADMIN')" href="/manager/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Managers</a>
 	<a sec:authorize="hasAuthority('ADMIN')" href="/teacher/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Teachers</a>
 	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER','TEACHER')" href="/classroom/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Classrooms</a>
-	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="/module/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Modules</a>
+	<!-- <a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="/module/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Modules</a> -->
 	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="/student/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Students</a>
-	<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER','TEACHER')" href="/session/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sessions</a>	
+	<a sec:authorize="hasAnyAuthority('ADMIN','TEACHER','STUDENT')" href="/session/list" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sessions</a>
+	<a sec:authorize="hasAnyAuthority('ADMIN','TEACHER','MANAGER','LEADER')" href="/session/textbook" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Text Book</a>	
 </nav>
 
 <!-- Side menu on small screens -->
@@ -31,14 +32,13 @@
 <!-- Top menu on large screens -->
 <div th:fragment="my-topbar" class="w3-margin">
 	<nav class="w3-bar w3-theme w3-collapse w3-large w3-padding w3-round-large w3-card-4" style="font-weight:bold;" id="myTopbar">
-		<a href="#Deconnexion" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white w3-right">Deconnexion</a>
-		<a href="#" class="w3-bar-item w3-button w3-right"><i class="fa fa-envelope"></i></a>
+		<a th:href="@{/logout}" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white w3-right">Logout</a>
+		<a href="#Messages" class="w3-bar-item w3-button w3-right"><i class="fa fa-envelope"></i></a>
 		<div class="w3-dropdown-hover w3-right w3-bar-block">
 			<div class="w3-bar-item w3-button">Profile <i class="fa fa-caret-down"></i>
 			</div>
 			<div id="demoDrop" class="w3-dropdown-content w3-white w3-card-4">
 				<a href="#" onclick="document.getElementById('id02').style.display='block'" class="w3-bar-item w3-button">Change password</a>
-				<a th:href="@{/logout}" class="w3-bar-item w3-button">Logout</a>
 			</div>
 		</div>
 	</nav>

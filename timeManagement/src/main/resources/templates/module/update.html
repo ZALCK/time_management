@@ -19,6 +19,13 @@
 		<label for="hours">Hours</label>
 		<input type="text" th:field="*{hours}" placeholder="Hourly weight" required="required">
 		
+		<label for="teacher">Teacher</label>
+		<select th:field="*{teacher.id}" id="teacher" class="w3-select">
+ 			 <option th:each="elementTeacher : ${teachers}" 
+          		th:value="${elementTeacher.id}" 
+          		th:text="${elementTeacher.firstname}">Teacher name</option>
+		</select>
+				
 		<label for="classroom">Classroom</label>
 		<select th:field="*{classroom.id}" id="classroom">
  			 <option th:each="elementClassroom : ${classrooms}" 

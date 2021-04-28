@@ -9,6 +9,17 @@ public class Event implements Serializable{
 	private String start;
 	private String end;
 	
+	public Event() {
+		super();
+	}
+	public Event(long id, String title, String start, String end) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+	}
+	
 	public long getId() {
 		return id;
 	}

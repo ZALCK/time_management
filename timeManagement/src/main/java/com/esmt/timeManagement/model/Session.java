@@ -3,6 +3,7 @@ package com.esmt.timeManagement.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,13 +29,16 @@ public class Session {
 	private Date endAt;
 	
 	private String details;
+	private String description;
+	private String status;
 	
-	@OneToOne(targetEntity = Module.class)
+	@OneToOne(targetEntity = Module.class, fetch = FetchType.LAZY)
 	@Exclude
 	private Module module;
 	
 	public Session() {
 		super();
+		this.status = Status.IN_PROGRESS.toString();
 	}
 
 	public long getId() {
@@ -73,10 +77,26 @@ public class Session {
 		this.module = module;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "Session [id=" + id + ", startAt=" + startAt + ", endAt=" + endAt + ", details=" + details + ", module="
-				+ module + "]";
+		return "Session [id=" + id + ", startAt=" + startAt + ", endAt=" + endAt + ", details=" + details
+				+ ", description=" + description + ", module=" + module + "]";
 	}
 
 }

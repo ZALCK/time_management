@@ -3,6 +3,7 @@ package com.esmt.timeManagement.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,9 +24,9 @@ public class Classroom {
 	
 	@OneToOne
 	private Manager manager;
-	@OneToMany(targetEntity=Student.class, mappedBy = "classroom")
+	@OneToMany(targetEntity=Student.class, mappedBy = "classroom", fetch = FetchType.LAZY)
 	private List<Student> students;
-	@OneToMany(targetEntity=Module.class, mappedBy = "classroom")
+	@OneToMany(targetEntity=Module.class, mappedBy = "classroom", fetch = FetchType.LAZY)
 	private List<Module> modules;
 
 	public long getId() {
@@ -71,8 +72,7 @@ public class Classroom {
 	
 	@Override
 	public String toString() {
-		return "Classroom [id=" + id + ", name=" + name + ", year=" + year + ", manager=" + manager + ", students="
-				+ students + ", modules=" + modules + "]";
+		return "Classroom [id=" + id + ", name=" + name + ", year=" + year + "]";
 	}
 
 }

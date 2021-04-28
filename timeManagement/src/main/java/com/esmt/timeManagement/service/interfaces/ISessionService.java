@@ -10,4 +10,6 @@ public interface ISessionService {
 	public Session getSession (Long id);
 	public void delete (Session session);
 	public List<Session> getAll();
+	List<Session> getSessionsToApproveByTeacher(long id);
+	List<Session> getSessionsToApproveByClassroom(long id);
 }

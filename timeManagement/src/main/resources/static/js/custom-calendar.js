@@ -6,12 +6,11 @@ $(document).ready(function() {
      center:'title',
      right:'month,agendaWeek,agendaDay,listWeek'
     },
-    events: 'http://localhost:8080/session/rawlist',
+    events: 'http://localhost:8080/session/rawlist/'+document.getElementById('classroomID').value,
     selectable:true,
     selectHelper:true,
     select: function(start, end, allDay)
     {
-     var title = prompt("Enter Event Title");
 	 const start_date = new Date(start);
 	 const end_date = new Date(end);
  	 document.getElementById('startAtField').value=start_date.toISOString().split(".")[0];
@@ -20,8 +19,6 @@ $(document).ready(function() {
 	} else {
 		document.getElementById('endAtField').value=start_date.toISOString().split(".")[0];
 	}
-	
-
      document.getElementById('sessionCreationForm').style.display='block';
      if(title)
      {
